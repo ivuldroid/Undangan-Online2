@@ -1,67 +1,45 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="theme-color" content="#BC8887" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Undangan Pernikahan</title>
-    <!-- Bulma Version 0.8.x-->
-    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/menikah.css" />
-    <link rel="stylesheet" type="text/css" href="css/jquery.countdown.css" />
-    <script src="https://kit.fontawesome.com/2828f7885a.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="js/jquery.coundown.js"></script>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan Raka & Sila</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #FAF9F6; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .gold-btn { background-color: #8b7355; }
+        .gold-text { color: #8b7355; }
+    </style>
+</head>
+<body class="text-gray-800">
 
-  <body>
-    <!-- (Bagian Header & Hero dibiarkan sama seperti template asli Anda) -->
-    <div class="header-wrapper" id="home">
-      <section class="hero is-large">
-        <div class="hero-body">
-          <div class="container has-text-centered">
-            <h1 class="subtitle">Undangan Pernikahan</h1>
-            <h2 class="title">Nama Wanita & Nama Pria</h2>
-          </div>
+    <section class="h-screen flex flex-col justify-center items-center text-center px-5 bg-stone-900 text-white" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80'); background-size: cover; background-position: center;">
+        <h3 class="tracking-widest uppercase mb-2 text-sm">The Wedding Of</h3>
+        <h1 class="text-6xl font-bold mb-4">Raka & Sila</h1>
+        <p class="text-lg italic">10 Oktober 2026</p>
+    </section>
+
+    <section class="py-16 px-6 max-w-md mx-auto">
+        <h2 class="text-3xl text-center gold-text mb-8">Ucapan & Doa</h2>
+        
+        <form id="commentForm" class="bg-white p-6 rounded-lg shadow-sm border border-stone-200 mb-8">
+            <input type="text" id="name" placeholder="Nama Anda" class="w-full p-3 border rounded mb-3" required>
+            <textarea id="message" placeholder="Tulis doa restu..." class="w-full p-3 border rounded mb-3" required></textarea>
+            <button type="submit" class="w-full gold-btn text-white p-3 rounded font-bold hover:bg-[#6b5840] transition">Kirim Ucapan</button>
+        </form>
+
+        <div id="commentList" class="space-y-4">
+            <p class="text-center text-gray-400">Memuat ucapan...</p>
         </div>
-      </section>
-    </div>
+    </section>
 
-    <div class="main-content">
-      <!-- (Isi template utama di sini...) -->
-      
-      <!-- TAMBAHAN: Section Komentar -->
-      <section class="section-light regular-section" id="ucapan">
-        <div class="container">
-          <h1 class="title has-text-centered section-title" data-aos="fade-up">Ucapan & Doa</h1>
-          <form id="commentForm" class="box" style="max-width: 600px; margin: auto;" data-aos="fade-up">
-            <div class="field">
-              <label class="label">Nama</label>
-              <input type="text" id="name" class="input" placeholder="Nama Anda" required>
-            </div>
-            <div class="field">
-              <label class="label">Pesan</label>
-              <textarea id="message" class="textarea" placeholder="Tulis doa restu..." required></textarea>
-            </div>
-            <button type="submit" class="button is-primary is-fullwidth">Kirim Ucapan</button>
-          </form>
-          <div id="commentList" class="mt-6" style="max-width: 600px; margin: auto;">
-             <p class="has-text-centered">Memuat ucapan...</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section RSVP (Asli dari template) -->
-      <section class="section-dark contact" id="rsvp">
-         <!-- (Isi RSVP Anda tetap di sini) -->
-      </section>
-    </div>
-
-    <!-- FIREBASE SDK & LOGIC -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
     <script>
+        // Konfigurasi Database Anda
         const firebaseConfig = {
             apiKey: "AIzaSyBLK-Ys7RF2bLgZlzjQxEyQfpx2cCsiblQ",
             authDomain: "selovely-228b6.firebaseapp.com",
@@ -69,36 +47,43 @@
             projectId: "selovely-228b6",
             storageBucket: "selovely-228b6.firebasestorage.app",
             messagingSenderId: "387647365822",
-            appId: "1:387647365822:web:2845152e7c36149d96b4ef"
+            appId: "1:387647365822:web:2845152e7c36149d96b4ef",
+            measurementId: "G-FLSCSN0ET7"
         };
+
+        // Inisialisasi
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Fungsi Kirim
+        // 1. Kirim Data
         document.getElementById('commentForm').onsubmit = (e) => {
             e.preventDefault();
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+
             db.collection("ucapan").add({
-                name: document.getElementById('name').value,
-                message: document.getElementById('message').value,
+                name: name,
+                message: message,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 alert("Terima kasih atas doanya!");
                 document.getElementById('commentForm').reset();
-            });
+            }).catch(err => alert("Gagal: " + err.message));
         };
 
-        // Fungsi Tampil
+        // 2. Tampilkan Data Real-time
         db.collection("ucapan").orderBy("timestamp", "desc").onSnapshot(snap => {
             const list = document.getElementById('commentList');
             list.innerHTML = "";
             snap.forEach(doc => {
                 const d = doc.data();
-                list.innerHTML += `<div class="box mb-3"><strong>${d.name}</strong><p>${d.message}</p></div>`;
+                list.innerHTML += `
+                    <div class="p-4 bg-white rounded shadow-sm border-l-4 border-[#8b7355]">
+                        <p class="font-bold text-[#8b7355] text-sm">${d.name}</p>
+                        <p class="text-gray-700 text-sm mt-1">${d.message}</p>
+                    </div>`;
             });
         });
     </script>
-
-    <!-- Scripts Template Asli -->
-    <script src="js/menikah.js"></script>
-  </body>
+</body>
 </html>
