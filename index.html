@@ -280,10 +280,21 @@
         .galeri-grid { grid-template-columns: repeat(2,1fr); }
         .navbar-fixed .nav-links { gap: 1rem; font-size: .7rem; }
         .countdown-wrap { gap: .75rem; }
-      }
+      }.music-btn { position:fixed; bottom:1.5rem; right:1.5rem; z-index:200; width:48px; height:48px; border-radius:50%; background:var(--rose); color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(188,136,135,.5); transition:background .3s,transform .2s; }
+.music-btn:hover { background:var(--rose-dark); transform:scale(1.1); }
+.music-btn i { font-size:1rem; }
+.music-btn .vinyl { position:absolute; inset:0; border-radius:50%; border:2px solid rgba(255,255,255,.3); animation:spin-vinyl 4s linear infinite; animation-play-state:paused; }
+.music-btn.playing .vinyl { animation-play-state:running; }
+@keyframes spin-vinyl { to { transform:rotate(360deg); } }
     </style>
   </head>
-  <body>    <div id="preloader">
+  <body>   <audio id="bg-music" loop>
+  <source src="GANTI_LINK_MP3" type="audio/mpeg">
+</audio>
+<button class="music-btn" id="music-btn" title="Play / Pause Musik">
+  <span class="vinyl"></span>
+  <i class="fas fa-music" id="music-icon"></i>
+</button> <div id="preloader">
       <div class="preloader-inner">
         <i class="fas fa-heart"></i>
         <p>Loading</p>
@@ -571,6 +582,18 @@
           list.appendChild(item);
         });
       }, err => console.error('Firestore error:', err));
-    </script>
+    const audio=document.getElementById('bg-music');
+const musicBtn=document.getElementById('music-btn');
+const musicIcon=document.getElementById('music-icon');
+let playing=false;
+function setPlaying(val){
+  playing=val;
+  if(playing){audio.play();musicBtn.classList.add('playing');musicIcon.className='fas fa-pause';}
+  else{audio.pause();musicBtn.classList.remove('playing');musicIcon.className='fas fa-music';}
+}
+musicBtn.addEventListener('click',()=>setPlaying(!playing));
+function tryAutoplay(){if(!playing)setPlaying(true);document.removeEventListener('click',tryAutoplay);document.removeEventListener('touchstart',tryAutoplay);}
+document.addEventListener('click',tryAutoplay);
+document.addEventListener('touchstart',tryAutoplay);</script>
   </body>
 </html>
