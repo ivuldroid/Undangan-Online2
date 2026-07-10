@@ -500,7 +500,7 @@
         document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
       });
 
-      const weddingDate = new Date('2021-04-21T17:00:00+07:00');
+      const weddingDate = new Date('2026-07-29T17:00:00+07:00');
       function updateCountdown() {
         const diff = weddingDate - new Date();
         if (diff <= 0) { ['cd-hari','cd-jam','cd-menit','cd-detik'].forEach(id => document.getElementById(id).textContent = '00'); return; }
